@@ -10,7 +10,7 @@ class Dashboard {
             window.DashboardConfig = {};
         }
         if (!('source' in DashboardConfig)) {
-            DashboardConfig.source = "static.json";
+            DashboardConfig.source = "example/static_v1.json";
         }
         if (!('rate' in DashboardConfig)) {
             DashboardConfig.rate = 1;
@@ -46,7 +46,7 @@ class Dashboard {
         }
         switch (data.version) {
             case 1: {
-                updateV1(data.package);
+                updateV1(data.contents);
                 break;
             }
             default: {
@@ -55,15 +55,15 @@ class Dashboard {
         }
     }
 
-    updateV1(package) {
+    updateV1(contents) {
         this.element.innerHTML = '<ul>' + [1, 2, 3, 4, 5]
-            .map(level => (level, package.happiness["" + level]))
+            .map(level => (level, contents.happiness["" + level]))
             .map((level, count) => `<li>level=${level} -> count=${count}</li>`) + '</ul>';
     }
 }
 
 window.addEventListener('load', function () {
-    let dashboard = Dashboard(document.getElementById('telemetry-dashboard'));
+    let dashboard = new Dashboard(document.getElementById('telemetry-dashboard'));
     dashboard.configure();
     dashboard.run();
 }, false);
