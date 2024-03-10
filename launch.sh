@@ -9,4 +9,4 @@ rm -f "$DATAFILE.backup"
 if [ -f "$DATAFILE" ]; then
     mv "$DATAFILE" "$DATAFILE.backup"
 fi
-"$PY" "$APPMAIN" > "$DATAFILE" & "$PY" servo/serial_connect.py
+"$PY" "$APPMAIN" >> "$DATAFILE"

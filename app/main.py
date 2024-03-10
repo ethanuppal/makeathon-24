@@ -10,8 +10,7 @@ import lib.color as color
 import lib.gui as gui
 import lib.timer as timer
 import config
-
-# import serial
+from servo.serial_connect import signal
 
 pygame.init()
 
@@ -32,7 +31,8 @@ buttons = []
 
 def button_callback(name, value):
     print(f"{name}={value}")
-    # serial.write(value)
+    sys.stdout.flush()
+    signal()
     if value >= config.happiness_threshold:
         status_text_area.set_text("Glad you're feeling well!")
     else:
@@ -73,22 +73,23 @@ main_view = gui.SafeView(
 )
 
 running = True
-while running:
-    # drawing
-    screen.fill(color.WHITE)
-    main_view.render(0, 0, width, height, screen)
+try:
+    while running:
+        # drawing
+        screen.fill(color.WHITE)
+        main_view.render(0, 0, width, height, screen)
 
-    # events
-    timing_queue.handle_requests()
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT or event.type == pygame.KEYDOWN:
-            running = False
-        elif event.type == pygame.MOUSEBUTTONDOWN or event.type == pygame.MOUSEBUTTONUP:
-            main_view.on_event(event)
+        # events
+        timing_queue.handle_requests()
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT or event.type == pygame.KEYDOWN:
+                running = False
+            elif event.type == pygame.MOUSEBUTTONDOWN or event.type == pygame.MOUSEBUTTONUP:
+                main_view.on_event(event)
 
-    # pygame loop
-    pygame.display.flip()
-    clock.tick(config.FPS)
-
-pygame.quit()
-sys.exit()
+        # pygame loop
+        pygame.display.flip()
+        clock.tick(config.FPS)
+except KeyboardInterrupt:
+    pygame.quit()
+    sys.exit()
