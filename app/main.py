@@ -6,6 +6,7 @@ import os
 os.environ["PYGAME_HIDE_SUPPORT_PROMPT"] = "hide"
 import pygame
 import sys
+import random
 import lib.color as color
 import lib.gui as gui
 import lib.timer as timer
@@ -21,7 +22,7 @@ pygame.display.set_caption("Makeathon 2024")
 width = screen.get_width()
 height = screen.get_height()
 
-timing_queue = timer.TimedQueue(2)
+timing_queue = timer.TimedQueue(3)
 
 clock = pygame.time.Clock()
 
@@ -38,6 +39,7 @@ def button_callback(name, value):
         status_text_area.set_text("Glad you're feeling well!")
     else:
         status_text_area.set_text("Sorry you're not feeling well.")
+        audio.AudioPlayer('./audio/lol.wav').play()
     status_text_area.set_visible(True)
     for button in buttons:
         button.set_enabled(False)
@@ -46,10 +48,11 @@ def button_callback(name, value):
         status_text_area.set_visible(False)
         for button in buttons:
             button.set_enabled(True)
+        audio.AudioPlayer(random.choice['./audio/ba.wav', './audio/pain.wav', './audio/scan.wav']).play()
 
     timing_queue.enqueue(after_timeout)
 
-audio = audio.AudioPlayer('../audio/baymax.wav').play()
+audio.AudioPlayer('./audio/baymax.wav').play()
 
 buttons = list(
     map(
