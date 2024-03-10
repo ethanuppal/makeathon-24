@@ -9,6 +9,7 @@ import sys
 import lib.color as color
 import lib.gui as gui
 import lib.timer as timer
+import lib.audio as audio
 import config
 from servo.serial_connect import signal
 
@@ -48,6 +49,7 @@ def button_callback(name, value):
 
     timing_queue.enqueue(after_timeout)
 
+audio = audio.AudioPlayer('../audio/baymax.wav').play()
 
 buttons = list(
     map(
