@@ -199,7 +199,7 @@ class Button(View):
     def on_event(self, event):
         if not self.enabled:
             return
-        mouse_pos = pygame.mouse.get_pos()
+        mouse_pos = event.pos
         distance = (mouse_pos[0] - (self.last_x + self.radius)) ** 2 + (
             mouse_pos[1] - (self.last_y + self.radius)
         ) ** 2

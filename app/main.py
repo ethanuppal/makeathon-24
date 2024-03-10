@@ -10,7 +10,8 @@ import lib.color as color
 import lib.gui as gui
 import lib.timer as timer
 import config
-from servo.serial_connect import signal
+
+# import servo
 
 pygame.init()
 
@@ -19,6 +20,7 @@ screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
 pygame.display.set_caption("Makeathon 2024")
 width = screen.get_width()
 height = screen.get_height()
+buffer_surface = pygame.Surface((width, height))
 
 timing_queue = timer.TimedQueue(2)
 
@@ -32,7 +34,7 @@ buttons = []
 def button_callback(name, value):
     print(f"{name}={value}")
     sys.stdout.flush()
-    signal()
+    # serial_connect.signal()
     if value >= config.happiness_threshold:
         status_text_area.set_text("Glad you're feeling well!")
     else:
@@ -76,8 +78,8 @@ running = True
 try:
     while running:
         # drawing
-        screen.fill(color.WHITE)
-        main_view.render(0, 0, width, height, screen)
+        buffer_surface.fill(color.WHITE)
+        main_view.render(0, 0, width, height, buffer_surface)
 
         # events
         timing_queue.handle_requests()
@@ -88,10 +90,15 @@ try:
                 event.type == pygame.MOUSEBUTTONDOWN
                 or event.type == pygame.MOUSEBUTTONUP
             ):
+                if config.invert_display_vertically:
+                    event.pos = (event.pos[0], height - event.pos[1])
                 main_view.on_event(event)
 
         # pygame loop
         pygame.display.flip()
+        if config.invert_display_vertically:
+            flipped_buffer = pygame.transform.flip(buffer_surface, False, True)
+            screen.blit(flipped_buffer, (0, 0))
         clock.tick(config.FPS)
 except KeyboardInterrupt:
     pygame.quit()
