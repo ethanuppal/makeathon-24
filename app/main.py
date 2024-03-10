@@ -48,10 +48,10 @@ def button_callback(name, value):
         status_text_area.set_visible(False)
         for button in buttons:
             button.set_enabled(True)
-        audio.AudioPlayer(random.choice['./audio/ba.wav', './audio/pain.wav', './audio/scan.wav']).play()
+        audio.AudioPlayer(random.choice(['./audio/ba.wav', './audio/pain.wav', './audio/scan.wav'])).play()
 
     timing_queue.enqueue(after_timeout)
-
+audio
 audio.AudioPlayer('./audio/baymax.wav').play()
 
 buttons = list(
