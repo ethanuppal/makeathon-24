@@ -84,7 +84,10 @@ try:
         for event in pygame.event.get():
             if event.type == pygame.QUIT or event.type == pygame.KEYDOWN:
                 running = False
-            elif event.type == pygame.MOUSEBUTTONDOWN or event.type == pygame.MOUSEBUTTONUP:
+            elif (
+                event.type == pygame.MOUSEBUTTONDOWN
+                or event.type == pygame.MOUSEBUTTONUP
+            ):
                 main_view.on_event(event)
 
         # pygame loop

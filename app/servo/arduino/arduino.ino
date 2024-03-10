@@ -7,27 +7,23 @@ int default_state = 0;
 
 int wait_time = 500;
 
-Servo myservo;
+Servo my_servo;
 
-void deploy()
-{
-    myservo.write(deploy_state);
+void deploy() {
+    my_servo.write(deploy_state);
     delay(wait_time);
-    myservo.write(default_state);
+    my_servo.write(default_state);
 }
 
-void setup()
-{
+void setup() {
     Serial.begin(9600);
-    myservo.attach(CONTROL_PIN);
-    myservo.write(default_state);
+    my_servo.attach(CONTROL_PIN);
+    my_servo.write(default_state);
 }
 
-void loop()
-{
+void loop() {
     int result = Serial.read();
-    if (result == '1')
-    {
+    if (result == '1') {
         deploy();
     }
 }
