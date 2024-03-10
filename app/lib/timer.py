@@ -1,5 +1,5 @@
 # Copyright (C) 2024 Ethan Uppal. All rights reserved.
-# Timer library in pygame for Makeathon 2024.
+# Timer library for Makeathon 2024.
 
 from queue import Queue
 import time
