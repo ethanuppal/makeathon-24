@@ -10,8 +10,7 @@ import lib.color as color
 import lib.gui as gui
 import lib.timer as timer
 import config
-
-# import servo
+import servo
 
 pygame.init()
 
@@ -34,7 +33,7 @@ buttons = []
 def button_callback(name, value):
     print(f"{name}={value}")
     sys.stdout.flush()
-    # serial_connect.signal()
+    serial_connect.signal()
     if value >= config.happiness_threshold:
         status_text_area.set_text("Glad you're feeling well!")
     else:
