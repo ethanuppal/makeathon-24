@@ -11,6 +11,10 @@ import lib.gui as gui
 import lib.timer as timer
 from views.smile_view import SmileView
 import config
+import json
+import requests
+from git import Repo
+import threading
 
 if config.on_rpi:
     from servo.serial_connect import signal
@@ -30,6 +34,7 @@ class App:
         self.buffer_surface = pygame.Surface((self.width, self.height))
         self.timing_queue = timer.TimedQueue(2)
         self.clock = pygame.time.Clock()
+        self.prep_for_git_push = False
 
     def setup(self):
         self.smiley = SmileView(radius=30)
@@ -102,9 +107,43 @@ class App:
             pygame.quit()
             sys.exit()
 
+    def git_update_telemetry(self, level, callback):
+        sys.stdout.flush()
+        url = "https://raw.githubusercontent.com/ethanuppal/makeathon-24/telemetry/telemetry.json"
+        response = requests.get(url)
+        data = response.json()
+
+        if data["version"] != 1:
+            return
+
+        data["contents"]["happiness"][f"{level}"] += 1
+        json_string = json.dumps(data)
+        repo = Repo(".")
+        repo.git.stash()
+        repo.git.checkout("telemetry")
+        with open("telemetry.json", "w") as file:
+            file.write(json_string)
+
+        repo.index.add(["telemetry.json"])
+        repo.index.commit("Post telemetry")
+        repo.git.push("origin", "telemetry")
+        repo.git.checkout("main")
+        repo.git.stash("pop")
+        callback()
+
+    def git_push_callback(self):
+        def callback(timer):
+            self.status_text_area.set_visible(False)
+            for button in self.buttons:
+                button.set_enabled(True)
+            self.smiley.set_big_eye(False)
+
+        self.timing_queue.enqueue(callback)
+
     def on_button(self, name, value):
         print(f"{name}={value}")
         sys.stdout.flush()
+        # self.git_update_telemetry(value, self.git_push_callback)
         if config.on_rpi:
             signal()
         if value >= config.happiness_threshold:
@@ -116,10 +155,10 @@ class App:
         for button in self.buttons:
             button.set_enabled(False)
 
-        def after_timeout(timer):
+        def callback(timer):
             self.status_text_area.set_visible(False)
             for button in self.buttons:
                 button.set_enabled(True)
             self.smiley.set_big_eye(False)
 
-        self.timing_queue.enqueue(after_timeout)
+        self.timing_queue.enqueue(callback)
