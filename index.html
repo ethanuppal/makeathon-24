@@ -5,13 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script>
-        window.DashboardConfig = {
-            source: "https://firestore.googleapis.com/v1/projects/makeathon-24/databases/(default)/documents/happiness/current",
-            rate: 0.5
-        };
-    </script>
-    <script src="dashboard.js"></script>
+    <script src="dashboard.js" type="module"></script>
     <link rel="stylesheet" href="style.css">
     <title>Telemetry Dashboard</title>
 </head>
@@ -23,15 +17,6 @@
         </div>
         <div class="padded area">
             <div id="telemetry-dashboard"></div>
-
-            <div class="padded">
-                <div>
-                    <span>Custom Source URL:</span>
-                    <input type="text" id="source-url-input">
-                    <button id="source-url-button">Use</button>
-                </div>
-                <p>The current source URL is: <code><span id="source-url-span">Loading...</span></code></p>
-            </div>
         </div>
     </div>
 </body>
