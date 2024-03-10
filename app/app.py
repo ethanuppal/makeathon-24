@@ -11,6 +11,9 @@ import lib.gui as gui
 import lib.timer as timer
 from views.smile_view import SmileView
 import config
+import firebase_admin
+from firebase_admin import credentials, firestore
+from google.cloud.firestore import Increment
 
 if config.on_rpi:
     from servo.serial_connect import signal
@@ -30,13 +33,10 @@ class App:
         self.buffer_surface = pygame.Surface((self.width, self.height))
         self.timing_queue = timer.TimedQueue(2)
         self.clock = pygame.time.Clock()
-        self.telemetry_file = open('data/happiness.txt', 'r+')
 
-        values = self.telemetry_file.readlines()
-        self.state = []
-
-        for value in values:
-            self.state.append(int(value.strip()))
+        cred = credentials.Certificate("secret/serviceAccountKey.json")
+        firebase_admin.initialize_app(cred)
+        self.db = firestore.client()
 
     def setup(self):
         self.smiley = SmileView(radius=30)
@@ -106,23 +106,17 @@ class App:
                 pygame.display.flip()
                 self.clock.tick(config.FPS)
         except KeyboardInterrupt:
-            self.telemetry_file.close()
             pygame.quit()
             sys.exit()
+    
+    def firebase_telemetry(self, happiness):
+        s = str(happiness)
+        doc_ref = self.db.collection('happiness').document('current')
+        doc_ref.update({
+            s: Increment(1)
+        })
 
     def on_button(self, name, value):
-        self.state[value - 1] += 1
-
-        string = ""
-        for i in self.state[:-1]:
-            string += str(i) + '\n'
-
-        string += str(self.state[-1]) + '\n'
-
-        self.telemetry_file.seek(0)
-        self.telemetry_file.write(string)
-        self.telemetry_file.flush()
-
         if config.on_rpi:
             signal()
         if value >= config.happiness_threshold:
@@ -133,6 +127,8 @@ class App:
         self.smiley.set_big_eye(True)
         for button in self.buttons:
             button.set_enabled(False)
+    
+        self.firebase_telemetry(value)
 
         def callback(timer):
             self.status_text_area.set_visible(False)
