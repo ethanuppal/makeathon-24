@@ -17,12 +17,22 @@
 </head>
 
 <body>
-    <div class="content">
+    <div class="padded content">
         <div class="center">
             <h1>Telemetry Dashboard</h1>
         </div>
-        <div id="telemetry-dashboard"></div>
-        <div class="area"></div>
+        <div class="padded area">
+            <div id="telemetry-dashboard"></div>
+
+            <div class="padded">
+                <div>
+                    <span>Custom Source URL:</span>
+                    <input type="text" id="source-url-input">
+                    <button id="source-url-button">Use</button>
+                </div>
+                <p>The current source URL is: <code><span id="source-url-span">Loading...</span></code></p>
+            </div>
+        </div>
     </div>
 </body>
 

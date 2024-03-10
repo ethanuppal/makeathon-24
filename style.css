@@ -2,7 +2,6 @@
 
 :root {
     --background-color: #e0e1e3;
-    font-family: sans-serif;
 }
 
 html,
@@ -10,20 +9,30 @@ body {
     top: 0;
     padding: 0;
     margin: 0;
+    font-family: sans-serif;
+}
+
+p,
+input,
+button,
+span {
+    font-size: 20px;
 }
 
 .center {
     text-align: center;
 }
 
+.padded {
+    padding: 1em;
+}
+
 .content {
     max-width: 1000px;
     margin: auto;
-    padding: 1em;
 }
 
 .area {
     border-radius: 1em;
-    padding: 1em;
     background-color: var(--background-color);
 }
