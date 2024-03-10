@@ -2,16 +2,24 @@
 # Utku, Sid, Andrew, Ethan
 
 import pygame
+import sys
 
 FPS = 60
 """
 The frame rate for the app.
 """
 
-font = pygame.font.SysFont(None, 36)
-"""
-The app's rendering font.
-"""
+
+def get_font():
+    """
+    Returns the app's rendering font.
+    """
+    if get_font.cache == None:
+        get_font.cache = pygame.font.SysFont(None, 36)
+    return get_font.cache
+
+
+get_font.cache = None
 
 happiness_levels = 5
 """

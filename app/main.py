@@ -1,12 +1,17 @@
 # Makeathon 2024 project
 # Utku, Sid, Andrew, Ethan
 
+import os
+
+os.environ["PYGAME_HIDE_SUPPORT_PROMPT"] = "hide"
 import pygame
 import sys
 import lib.color as color
 import lib.gui as gui
 import lib.timer as timer
 import config
+
+# import serial
 
 pygame.init()
 
@@ -21,11 +26,13 @@ timing_queue = timer.TimedQueue(2)
 clock = pygame.time.Clock()
 
 # need to declare these in advance for `button_callback`
-status_text_area = gui.TextArea("", config.font, color.BLACK)
+status_text_area = gui.TextArea("", config.get_font(), color.BLACK)
 buttons = []
 
 
 def button_callback(name, value):
+    print(f"{name}={value}")
+    # serial.write(value)
     if value >= config.happiness_threshold:
         status_text_area.set_text("Glad you're feeling well!")
     else:
@@ -44,7 +51,7 @@ def button_callback(name, value):
 
 buttons = list(
     map(
-        lambda x: gui.Button("happiness", x, 30, config.font, button_callback),
+        lambda x: gui.Button("happiness", x, 30, config.get_font(), button_callback),
         range(1, 6),
     )
 )
@@ -54,7 +61,7 @@ main_view = gui.SafeView(
         [
             gui.TextArea(
                 "On a scale of 1-5, how are you feeling today? Use the buttons to select a value.",
-                config.font,
+                config.get_font(),
                 color.BLACK,
             ),
             gui.VSpacer(),
