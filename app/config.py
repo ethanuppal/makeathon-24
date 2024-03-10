@@ -35,3 +35,12 @@ invert_display_vertically = True
 """
 Whether the output should be inverted verbatim in the vertical direction.
 """
+
+on_rpi = True
+"""
+Whether the app is running on the Raspberry Pi.
+"""
+if len(sys.argv) >= 2 and sys.argv[1] == "Darwin":
+    # since I'm testing it on MacOS
+    on_rpi = False
+    invert_display_vertically = False

@@ -8,4 +8,4 @@ rm -f "$DATAFILE.backup"
 if [ -f "$DATAFILE" ]; then
     mv "$DATAFILE" "$DATAFILE.backup"
 fi
-DISPLAY=:0 "$PY" "$APPMAIN" >> "$DATAFILE"
+DISPLAY=:0 "$PY" "$APPMAIN" $(uname) >> "$DATAFILE"
