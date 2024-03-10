@@ -8,7 +8,7 @@ There is additional code on the docs branch for a dashboard.
 
 **Group Members**
 
-- Utku
-- Sid
-- Andrew
-- Ethan
+- Utku Melemetci (https://yey007.github.io/)
+- Sidharth Rao (https://bored.iamsrao.com/, https://iamsrao.com/)
+- Andrew Lewis (https://www.alewis.dev/)
+- Ethan Uppal (https://ethanuppal.com/)
