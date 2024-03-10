@@ -91,14 +91,16 @@ try:
                 or event.type == pygame.MOUSEBUTTONUP
             ):
                 if config.invert_display_vertically:
-                    event.pos = (event.pos[0], height - event.pos[1])
+                    event.pos = (width - event.pos[0], height - event.pos[1])
                 main_view.on_event(event)
 
         # pygame loop
-        pygame.display.flip()
         if config.invert_display_vertically:
-            flipped_buffer = pygame.transform.flip(buffer_surface, False, True)
+            flipped_buffer = pygame.transform.rotate(buffer_surface, 180)
             screen.blit(flipped_buffer, (0, 0))
+        else:
+            screen.blit(buffer_surface, (0, 0))
+        pygame.display.flip()
         clock.tick(config.FPS)
 except KeyboardInterrupt:
     pygame.quit()
