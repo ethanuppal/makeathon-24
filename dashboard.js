@@ -34,7 +34,7 @@ class Dashboard {
             fetchJSON(DashboardConfig.source)
                 .then(data => {
                     if (data) {
-                        update(data)
+                        this.update(data)
                     }
                 });
         }, DashboardConfig.rate * 1000 /* milliseconds -> seconds */);
@@ -46,7 +46,7 @@ class Dashboard {
         }
         switch (data.version) {
             case 1: {
-                updateV1(data.contents);
+                this.updateV1(data.contents);
                 break;
             }
             default: {
