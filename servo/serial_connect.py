@@ -14,8 +14,8 @@ while True:
     # print(to_bytes(0))
     # time.sleep(3)
 
-    serial.write(b'100')
+    serial.write(b'1')
     time.sleep(3)
-    serial.write(b'0')
+    serial.write(b'2')
     time.sleep(3)
     
