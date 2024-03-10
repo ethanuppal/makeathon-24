@@ -14,6 +14,8 @@ import config
 import firebase_admin
 from firebase_admin import credentials, firestore
 from google.cloud.firestore import Increment
+import lib.audio as audio
+import random
 
 if config.on_rpi:
     from servo.serial_connect import signal
@@ -71,6 +73,8 @@ class App:
             )
         )
 
+        audio.AudioPlayer('./audio/baymax.wav').play()
+
     def run(self):
         running = True
         try:
@@ -123,6 +127,7 @@ class App:
             self.status_text_area.set_text("Glad you're feeling well!")
         else:
             self.status_text_area.set_text("Sorry you're not feeling well.")
+        audio.AudioPlayer('./audio/lol.wav').play()
         self.status_text_area.set_visible(True)
         self.smiley.set_big_eye(True)
         for button in self.buttons:
@@ -132,6 +137,7 @@ class App:
             self.status_text_area.set_visible(False)
             for button in self.buttons:
                 button.set_enabled(True)
+            audio.AudioPlayer(random.choice(['./audio/ba.wav', './audio/pain.wav', './audio/scan.wav'])).play()
             self.smiley.set_big_eye(False)
             self.firebase_telemetry(value)
 
