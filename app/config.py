@@ -1,5 +1,5 @@
-# Makeathon 2024 project
-# Utku, Sid, Andrew, Ethan
+# Makeathon 2024 project - BASSMAXX
+# Sidharth Rao, Utku Melemetci, Ethan Uppal, Andrew Louis
 
 import pygame
 import sys
