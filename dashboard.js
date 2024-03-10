@@ -97,22 +97,21 @@ class Dashboard {
         const levelTextRects = levels.map(level => ctx.measureText(`${level} (${counts[level - 1]})`));
 
         const textHeight = 10;
-        const remainingHeight = height - textHeight;
 
         const numColumns = levels.length;
         const columnWidth = width / numColumns;
 
         const maxCount = counts.reduce((x, y) => Math.max(x, y), 0);
-        const heightPerCount = remainingHeight / maxCount;
+        const heightPerCount = height / maxCount;
 
         for (let i = 0; i < numColumns; i++) {
             ctx.fillStyle = colors[i];
             const columnHeight = heightPerCount * counts[i];
-            ctx.fillRect(i * columnWidth, remainingHeight - columnHeight, columnWidth, columnHeight);
+            ctx.fillRect(i * columnWidth, height - columnHeight, columnWidth, columnHeight);
 
             ctx.font = `${textHeight}px Arial`;
             ctx.fillStyle = 'black';
-            ctx.fillText(`${i + 1} (${counts[i]})`, (i + 0.5) * columnWidth - levelTextRects[i].width / 2, remainingHeight);
+            ctx.fillText(`${i + 1} (${counts[i]})`, (i + 0.5) * columnWidth - levelTextRects[i].width / 2, height - textHeight / 2);
         }
     }
 
