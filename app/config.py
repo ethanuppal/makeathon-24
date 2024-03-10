@@ -31,7 +31,7 @@ happiness_threshold = 3
 The threshold greater than or equal to which a happiness level is considered "happy".
 """
 
-invert_display_vertically = True
+invert_display_vertically = False
 """
 Whether the output should be inverted verbatim in the vertical direction.
 """
