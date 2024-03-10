@@ -110,10 +110,10 @@ class App:
             sys.exit()
     
     def firebase_telemetry(self, happiness):
-        s = str(happiness)
+        path = f'contents.{happiness}'
         doc_ref = self.db.collection('happiness').document('current')
         doc_ref.update({
-            s: Increment(1)
+            path: Increment(1)
         })
 
     def on_button(self, name, value):
@@ -128,12 +128,11 @@ class App:
         for button in self.buttons:
             button.set_enabled(False)
     
-        self.firebase_telemetry(value)
-
         def callback(timer):
             self.status_text_area.set_visible(False)
             for button in self.buttons:
                 button.set_enabled(True)
             self.smiley.set_big_eye(False)
+            self.firebase_telemetry(value)
 
         self.timing_queue.enqueue(callback)
