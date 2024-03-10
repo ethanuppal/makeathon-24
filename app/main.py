@@ -49,7 +49,7 @@ def button_callback(name, value):
 
     timing_queue.enqueue(after_timeout)
 
-audio = audio.AudioPlayer('../audio/baymax.wav').play()
+audio = audio.AudioPlayer('audio/baymax.wav').play()
 
 buttons = list(
     map(
