@@ -1,8 +1,9 @@
 # Makeathon 2024
 
+Presentation: https://docs.google.com/presentation/d/1e5yuNSzkqcU7ivFWvr8YPGmrOF6IwFKIkY3PY9dzy_A/edit?usp=sharing
+
 For the 2024 Cornell Makeathon, the theme was "future cities".
-We built a robot that would improve the mental health of urban communities.
-This code is intended to be run on a Raspberry Pi situated on our robot.
+We built a robot that would improve the mental health of urban communities by collecting mental health data and dispensing candy!
 
 There is additional code on the docs branch for a dashboard.
 
